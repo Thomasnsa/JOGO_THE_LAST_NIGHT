@@ -8,20 +8,20 @@ public class GerenciadorJogoService {
     private PersonagemEntity josh; 
     
     public GerenciadorJogoService() {
-        // Instanciação: O objeto 'josh' é criado aqui
+        // CORREÇÃO: Inicialize o objeto JOSH aqui no CONSTRUTOR.
+        // O objeto só é criado uma vez!
         this.josh = new PersonagemEntity("Josh"); 
-        
     }
     
     // Método para permitir que outras classes acessem o objeto Josh
     public PersonagemEntity getJosh() {
-        return this.josh;
+        // APENAS RETORNE O OBJETO JÁ CRIADO, não o crie novamente.
+        return this.josh; 
     }
     
     // Método que usa o objeto Josh
     public void aplicarPenaPorAtoIlegal() {
-        // Regra de Negócio usando o método da Entidade Personagem:
+        // Regra de Negócio: Usa o 'josh' que foi criado no construtor
         this.josh.aumentarSuspeita(1); 
     }
-
 }
