@@ -40,23 +40,39 @@ public class JogoController {
         this.narrativaView.exibirCenaPrisaoDerick();
 
         this.narrativaView.exibirCenaZelador();
-        escolhaZelador = scanner.next();
+        String decisao = scanner.next();
+        SimOuNao(decisao);
 
 
         
     }
 
-    public void SimOuNao(String escolha) {
-        if (escolha.equalsIgnoreCase("sim")) {
-            System.out.println("Você escolheu SIM.");
-        } else if (escolha.equalsIgnoreCase("não")) {
-            System.out.println("Você escolheu NÃO.");
-        } else {
-            System.out.println("Escolha inválida. Por favor, responda com 'sim' ou 'não'.");
-        }
-        
-    }
+    public boolean SimOuNao(String escolhaBruta) {
+
+    // 1. Converte e Limpa a entrada bruta
+    String escolha = escolhaBruta.trim().toLowerCase(); 
+
+    // 2. CORREÇÃO: Usar .equals() ou .equalsIgnoreCase()
+    if (escolha.equals("s")) {
+        System.out.println("Você escolheu SIM.");
+        return true;
+    } 
     
+    // 3. CORREÇÃO: Usar else if
+    else if (escolha.equals("n")) {
+        System.out.println("Você escolheu NÃO.");
+        return false;
+    } 
+    
+    // 4. Tratamento de entrada inválida
+    else {
+        System.out.println("Escolha inválida. Por favor, responda com 's' ou 'n'.");
+        // Em um cenário real, você provavelmente retornaria FALSE e deixaria o Controller lidar
+        // com o erro. Neste caso, retornaremos false para indicar falha de validação.
+        return false;
+    }
+}
+
     //public void mostrarStatus() {
         // Ponto A: Controller pega o dado do Model
         //PersonagemEntity josh = gerenciador.getJosh(); 

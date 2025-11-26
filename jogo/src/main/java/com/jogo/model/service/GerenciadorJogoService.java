@@ -25,16 +25,7 @@ public class GerenciadorJogoService {
         this.josh.aumentarSuspeita(1); 
     }
 
-    public boolean sorte() {
-        
-        int numeroAleatorio = (int)(Math.random() * 10) + 1; 
-
-        if (numeroAleatorio >= 5) {
-            return true;
-        } else {
-            return false;
-        }   
-    }
+    
     
 
 }
