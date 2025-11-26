@@ -24,4 +24,17 @@ public class GerenciadorJogoService {
         // Regra de Negócio: Usa o 'josh' que foi criado no construtor
         this.josh.aumentarSuspeita(1); 
     }
+
+    public boolean sorte() {
+        
+        int numeroAleatorio = (int)(Math.random() * 10) + 1; 
+
+        if (numeroAleatorio >= 5) {
+            return true;
+        } else {
+            return false;
+        }   
+    }
+    
+
 }

@@ -13,7 +13,7 @@ public class Main {
         
         // 2. Chama o método de inicialização no Controller.
         // O Controller agora assume o controle e inicia o fluxo.
-        controller.mostrarStatus();
+        controller.iniciarJogo();
 
     }
 }
