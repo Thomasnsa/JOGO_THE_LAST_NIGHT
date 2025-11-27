@@ -1,13 +1,12 @@
 package com.jogo.controller;
 
 import java.util.Scanner;
-
 import javax.swing.text.View;
-
 import com.jogo.model.entity.PersonagemEntity;
-
+import com.jogo.model.entity.PistaEntity;
 import com.jogo.model.service.GerenciadorJogoService;
-
+import com.jogo.model.service.PistaService;
+import com.jogo.model.service.PistaFactory;
 import com.jogo.view.StatusView;
 import com.jogo.view.IntroducaoView;
 import com.jogo.view.NarrativaView;
@@ -15,19 +14,27 @@ import com.jogo.view.NarrativaView;
 public class JogoController {
 
     private GerenciadorJogoService gerenciador; // Model Service
+    private PistaService pistaService;
+    private PistaFactory pistaFactory; 
+    private PistaEntity pistaEntity; // Model Service
+
     private final Scanner scanner;
     private final IntroducaoView introducaoView;
     private final NarrativaView narrativaView;
+    
 
     public JogoController() {
         // Inicializa o Service antes que qualquer método tente usá-lo.
         this.gerenciador = new GerenciadorJogoService(); 
-
+        this.pistaService = new PistaService();
+        this.pistaFactory = new PistaFactory();
+        
         // Inicializa o Scanner
         this.scanner = new Scanner(System.in);
-
         this.narrativaView = new NarrativaView(this.scanner);
         this.introducaoView = new IntroducaoView(this.scanner);
+
+
 
     }
 
@@ -41,37 +48,65 @@ public class JogoController {
 
         this.narrativaView.exibirCenaZelador();
         String decisao = scanner.next();
-        SimOuNao(decisao);
 
-
+        boolean decisaoFinal = SimOuNao(decisao); 
+        this.introducaoView.esperarEnterParaContinuar();
         
+        if(decisaoFinal == true)  {
+             boolean sorteFinal = sorte();
+            if(sorteFinal == true) {
+                this.narrativaView.exibirResultadoBoaSorteZelador();
+                pistaService.adicionarPista(pistaFactory.criarBauZelador());
+                pistaService.getPistasEncontradas();
+            } else {
+                System.err.println("errou!");
+            }
+           
+        } 
+
+           
     }
 
     public boolean SimOuNao(String escolhaBruta) {
 
-    // 1. Converte e Limpa a entrada bruta
-    String escolha = escolhaBruta.trim().toLowerCase(); 
+    // 1. Processamento (Limpa e padroniza a entrada)
+    String escolhaProcessada = escolhaBruta.trim().toLowerCase();
+    Scanner sc = new Scanner(System.in);
 
-    // 2. CORREÇÃO: Usar .equals() ou .equalsIgnoreCase()
-    if (escolha.equals("s")) {
-        System.out.println("Você escolheu SIM.");
-        return true;
-    } 
-    
-    // 3. CORREÇÃO: Usar else if
-    else if (escolha.equals("n")) {
-        System.out.println("Você escolheu NÃO.");
-        return false;
-    } 
-    
-    // 4. Tratamento de entrada inválida
-    else {
-        System.out.println("Escolha inválida. Por favor, responda com 's' ou 'n'.");
-        // Em um cenário real, você provavelmente retornaria FALSE e deixaria o Controller lidar
-        // com o erro. Neste caso, retornaremos false para indicar falha de validação.
-        return false;
+    while(1 == 1) {
+        if (escolhaProcessada.equals("s")) {
+        // Exibe feedback, mas NÃO retorna aqui para que o loop externo possa usar o resultado.
+        System.out.println("Opção escolhida: SIM. (Preparando para investigar)");
+
+        this.scanner.nextLine(); 
+
+        return true; // Entrada válida
+        
+    } else if (escolhaProcessada.equals("n")) {
+        System.out.println("Opção escolhida: NÃO. (Avançando na história)");
+        
+        return false; // Entrada válida
     }
+    
+    System.out.println("\n❌ Escolha inválida. Por favor, responda APENAS com 's' ou 'n'.");
+    escolhaBruta = sc.nextLine();
+    escolhaProcessada = escolhaBruta.trim().toLowerCase();
+            
+    }
+
 }
+
+    public boolean sorte() {
+        
+        System.out.println("Pela sorte iremos ver se você conseguirá encontrar algo ou levantará suspeita contra si próprio.");
+        System.out.println("Aperte ENTER para ver o resultado.");
+        this.introducaoView.esperarEnterParaContinuar();
+
+
+
+        double numeroAleatorio = Math.random(); // Gera número entre 0.0 e 1.0
+        return numeroAleatorio > 0.4; 
+    }
 
     //public void mostrarStatus() {
         // Ponto A: Controller pega o dado do Model

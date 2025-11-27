@@ -19,4 +19,9 @@ public class StatusView {
         System.out.println("---------------------------------");
     }
 
+    public static void pistaEncontrada() {
+        System.out.println("\n✅ Pista encontrada!");
+    }
+
+
 }

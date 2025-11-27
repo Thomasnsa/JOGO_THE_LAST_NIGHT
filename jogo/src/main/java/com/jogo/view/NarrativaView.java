@@ -81,4 +81,30 @@ public class NarrativaView {
         System.out.println("Gostaria de investigar o cômodo do Zelador Bob? (escreve 'S' para sim ou 'N' para não)");
 
     }
+
+    public void exibirResultadoBoaSorteZelador() {
+        
+        System.out.println("\n--- RESULTADO: BOA SORTE! 🍀 ---");
+        System.out.println("Josh: \"Consegui deslizar para dentro. Encontrei um baú médio de madeira, trancado.\"");
+        System.out.println("**Pista Adquirida:** Você encontra um Baú Misterioso!");
+        System.out.println("----------------------------------");
+        
+        System.out.println("Pressione ENTER para continuar...");
+        scanner.nextLine();
+    }
+
+    /**
+     * Exibe a narrativa da MÁ SORTE na cena do Zelador.
+     * Não recebe parâmetros e não retorna nada (void).
+     */
+    public void exibirResultadoMaSorteZelador() {
+        
+        System.out.println("\n--- RESULTADO: MÁ SORTE! 🚨 ---");
+        System.out.println("Zelador Bob: \"O que pensa que está fazendo no meu armário, garoto? Isso é invasão!\"");
+        System.out.println("**Ação:** Zelador te encontra vasculhando o armário. (+1 Suspeita adicionada)");
+        System.out.println("----------------------------------");
+        
+        System.out.println("Pressione ENTER para continuar...");
+        scanner.nextLine();
+    }
 }
