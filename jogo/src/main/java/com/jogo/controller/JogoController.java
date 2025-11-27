@@ -82,6 +82,7 @@ public class JogoController {
                 this.introducaoView.esperarEnterParaContinuar();
                 gerenciador.consultarNivelSuspeita();
                 this.introducaoView.esperarEnterParaContinuar();
+                verificarCondicaoGameOver();
                 this.narrativaView.zeladorVaiEmbora();
                 
 
@@ -130,6 +131,7 @@ public class JogoController {
                 this.gerenciador.aplicarPenaPorAtoIlegal();
                 this.introducaoView.esperarEnterParaContinuar();
                 gerenciador.consultarNivelSuspeita();
+                verificarCondicaoGameOver();
                 this.introducaoView.esperarEnterParaContinuar();
 
                 decisaoFinal = this.narrativaView.reivestigar();
@@ -170,6 +172,7 @@ public class JogoController {
                 this.gerenciador.aplicarPenaPorAtoIlegal();
                 this.introducaoView.esperarEnterParaContinuar();
                 gerenciador.consultarNivelSuspeita();
+                verificarCondicaoGameOver();
                 this.introducaoView.esperarEnterParaContinuar();
 
                 decisaoFinal = this.narrativaView.reivestigar();
@@ -220,6 +223,7 @@ public class JogoController {
                 this.gerenciador.aplicarPenaPorAtoIlegal();
                 this.introducaoView.esperarEnterParaContinuar();
                 gerenciador.consultarNivelSuspeita();
+                verificarCondicaoGameOver();
                 this.introducaoView.esperarEnterParaContinuar();
 
                 decisaoFinal = this.narrativaView.reivestigar();
@@ -312,6 +316,8 @@ public void iniciarAcusacaoFinal() {
     } else {
         // === FINAL DERROTA/ERRO ===
         this.narrativaView.exibirFinalDerrota(escolha, ASSASSINO_CORRETO);
+
+        System.exit(0);
     }
     
     // Finaliza o jogo após o desfecho
@@ -478,15 +484,54 @@ public void iniciarSelecaoEntrevistas() {
 
 
         double numeroAleatorio = Math.random(); // Gera número entre 0.0 e 1.0
-        return numeroAleatorio > 0.4; 
+        return numeroAleatorio > 2; 
     }
 
-    //public void mostrarStatus() {
-        // Ponto A: Controller pega o dado do Model
-        //PersonagemEntity josh = gerenciador.getJosh(); 
+    // DENTRO DE JogoController.java
+
+// Assumindo que você tem uma instância do seu Service:
+// private GerenciadorJogoService gerenciadorJogoService;
+
+/**
+ * Consulta o nível de suspeita e dispara o Game Over se o limite for atingido (>= 3).
+ * Este método deve ser chamado sempre após um ato ilegal que aumente a suspeita.
+ */
+public void verificarCondicaoGameOver() {
+    
+    // 1. Consulta o nível de suspeita no Service
+    int nivelSuspeita = this.gerenciador.getSuspeitaAtual();
+    
+    // 2. Verifica a condição de fim de jogo
+    if (nivelSuspeita >= 3) {
         
-        // Ponto B: Controller passa o dado para a View
-       //StatusView.exibirStatus(josh); 
-  //}
+        // 3. Exibe a mensagem de fim de jogo
+        System.out.println("\n=================================================");
+        System.out.println("     🚨 GAME OVER: SUSPEITA MÁXIMA! 🚨");
+        System.out.println("=================================================");
+        System.out.println("  Seu nível de suspeita é: " + nivelSuspeita + "/3.");
+        System.out.println("  Sua identidade foi exposta! Fim de jogo.");
+        
+        System.exit(0);
+   
+    } 
+    // Se não atingiu 3, a função simplesmente termina e o jogo continua.
+}
+
+
+
+// --------------------------------------------------------------------------------
+
+// Exemplo de como usar a nova função
+public void executarAtoIlegal() {
+    
+    // 1. Aplica a pena
+    this.gerenciador.aplicarPenaPorAtoIlegal();
+    
+    // 2. Exibe o novo status (opcional)
+    this.gerenciador.consultarNivelSuspeita();
+    
+    // 3. Verifica se a pena aplicada causou o Game Over
+    this.verificarCondicaoGameOver();
+}
 
 }

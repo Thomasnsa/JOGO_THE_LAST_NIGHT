@@ -34,6 +34,10 @@ public class GerenciadorJogoService {
         System.out.println("Quantidade atual: " + nivelSuspeita + "/3");
     }
     
+    public int getSuspeitaAtual() {
+    // O Service é o único que acessa a Entity
+    return this.josh.getNivelSuspeita();
+}
     
 
 }
