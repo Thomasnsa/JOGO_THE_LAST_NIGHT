@@ -484,7 +484,7 @@ public void iniciarSelecaoEntrevistas() {
 
 
         double numeroAleatorio = Math.random(); // Gera número entre 0.0 e 1.0
-        return numeroAleatorio > 2; 
+        return numeroAleatorio > 0.4; // 60% de chance de retornar true (boa sorte)
     }
 
     // DENTRO DE JogoController.java
