@@ -6,7 +6,11 @@ import com.jogo.model.entity.PersonagemEntity;
 import com.jogo.model.entity.PistaEntity;
 import com.jogo.model.service.GerenciadorJogoService;
 import com.jogo.model.service.PistaService;
+import com.jogo.model.service.SuspeitoFactory;
 import com.jogo.model.service.PistaFactory;
+import com.jogo.model.service.SuspeitoFactory;
+import com.jogo.model.service.SuspeitoService;
+
 import com.jogo.view.StatusView;
 import com.jogo.view.IntroducaoView;
 import com.jogo.view.NarrativaView;
@@ -17,7 +21,8 @@ public class JogoController {
     private PistaService pistaService;
     private PistaFactory pistaFactory; 
     private PistaEntity pistaEntity; // Model Service
-
+    private SuspeitoFactory suspeitoFactory;
+    private SuspeitoService suspeitoService;    
     private final Scanner scanner;
     private final IntroducaoView introducaoView;
     private final NarrativaView narrativaView;
@@ -28,7 +33,10 @@ public class JogoController {
         this.gerenciador = new GerenciadorJogoService(); 
         this.pistaService = new PistaService();
         this.pistaFactory = new PistaFactory();
-        
+        this.suspeitoFactory = new SuspeitoFactory();
+        this.suspeitoService = new SuspeitoService();
+
+
         // Inicializa o Scanner
         this.scanner = new Scanner(System.in);
         this.narrativaView = new NarrativaView(this.scanner);
@@ -51,21 +59,56 @@ public class JogoController {
 
         boolean decisaoFinal = SimOuNao(decisao); 
         this.introducaoView.esperarEnterParaContinuar();
-        
-        if(decisaoFinal == true)  {
+
+        do {
+            if(decisaoFinal == true)  {
              boolean sorteFinal = sorte();
             if(sorteFinal == true) {
                 this.narrativaView.exibirResultadoBoaSorteZelador();
                 pistaService.adicionarPista(pistaFactory.criarBauZelador());
                 pistaService.getPistasEncontradas();
-            } else {
-                System.err.println("errou!");
-            }
-           
-        } 
+                this.introducaoView.esperarEnterParaContinuar();
 
-           
-    }
+                suspeitoService.adicionarSuspeito(suspeitoFactory.criarZelador());
+                suspeitoService.exibirListaSuspeitos();
+
+                decisaoFinal = false;
+            } else {
+                this.narrativaView.exibirResultadoMaSorteZelador();
+                this.gerenciador.aplicarPenaPorAtoIlegal();
+                this.introducaoView.esperarEnterParaContinuar();
+                gerenciador.consultarNivelSuspeita();
+                this.introducaoView.esperarEnterParaContinuar();
+                this.narrativaView.zeladorVaiEmbora();
+                
+
+                decisaoFinal = this.narrativaView.reivestigar();
+                decisao = scanner.next();
+                decisaoFinal = SimOuNao(decisao);
+                
+                if(decisaoFinal == true) {
+                    decisaoFinal = true;
+                } else {
+                decisaoFinal = false;
+            }
+        }
+        } }while(decisaoFinal == true);
+
+        this.narrativaView.exibirRetornoParaCasa();
+        decisao = scanner.next();
+        decisaoFinal = SimOuNao(decisao);
+        this.introducaoView.esperarEnterParaContinuar();
+
+        if(decisaoFinal == true) {
+            pistaService.getPistasEncontradas();
+            suspeitoService.exibirListaSuspeitos();
+        }
+
+        
+        this.narrativaView.exibirNovoDia();
+    }         
+    
+
 
     public boolean SimOuNao(String escolhaBruta) {
 
@@ -91,10 +134,8 @@ public class JogoController {
     System.out.println("\n❌ Escolha inválida. Por favor, responda APENAS com 's' ou 'n'.");
     escolhaBruta = sc.nextLine();
     escolhaProcessada = escolhaBruta.trim().toLowerCase();
-            
+        }         
     }
-
-}
 
     public boolean sorte() {
         
@@ -115,9 +156,5 @@ public class JogoController {
         // Ponto B: Controller passa o dado para a View
        //StatusView.exibirStatus(josh); 
   //}
-
-    
-
- 
 
 }

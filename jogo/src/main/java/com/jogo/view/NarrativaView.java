@@ -19,6 +19,11 @@ public class NarrativaView {
         System.out.println("\n");
     }
 
+     public boolean reivestigar() {
+        System.out.println("Gostaria de investigar novamente? (escreve 'S' para sim ou 'N' para não)");
+        return true;
+    }
+
     /**
      * Exibe a sequência da cena de prisão de Derick (Capítulo 1).
      */
@@ -107,4 +112,65 @@ public class NarrativaView {
         System.out.println("Pressione ENTER para continuar...");
         scanner.nextLine();
     }
+
+    public void zeladorVaiEmbora() {
+        System.out.println("Zelador Bob: \"Hmph. Melhor você ir embora daqui!\"");
+        System.out.println("Ação: Zelador Bob vai embora, deixando você.");
+        System.out.println("----------------------------------");
+        
+        System.out.println("Pressione ENTER para continuar...");
+        scanner.nextLine();
+    }
+
+    public void exibirRetornoParaCasa() {
+    
+    System.out.println("\n------------------------------------");
+    System.out.println("  O dia chegou ao fim.");
+    
+    // Assumindo que você tem um método auxiliar para pausar
+    esperarEnterParaContinuar();
+    
+    System.out.println("  Depois de um longo tempo na escola, ou na rua investigando, Josh se dirige para casa.");
+    System.out.println("  O sol se pôs, e as luzes da rua acendem. A cabeça dele está cheia de perguntas sobre o caso do assasinato de Lucas.");
+    
+    esperarEnterParaContinuar();
+    
+    System.out.println("  Ele sabe que a noite é o melhor momento para rever suas notas, verificar as pistas e planejar o próximo passo.");
+    System.out.println("  Josh finalmente chega em casa.");
+    System.out.println("------------------------------------\n");
+
+    esperarEnterParaContinuar();
+
+    System.out.println("Gostaria de revisar as pistas e suspeitas encontradas até agora? (escreve 'S' para sim ou 'N' para não)");
+}
+
+    // DENTRO DE NarrativaView.java
+
+/**
+ * Exibe a cena de transição onde Josh vai dormir e acorda para o novo dia.
+ */
+public void exibirNovoDia() {
+    
+    System.out.println("\n--- FIM DO DIA ---\n");
+    
+    esperarEnterParaContinuar();
+    
+    // Texto Resumido (Descanso)
+    System.out.println("  As preocupações pesam, mas Josh consegue descansar. O corpo e a mente precisavam da pausa.");
+    
+    esperarEnterParaContinuar();
+    
+    System.out.println("\n... Horas se passam ...\n");
+    
+    esperarEnterParaContinuar();
+    
+    // Texto Resumido (Despertar e Urgência)
+    System.out.println("  🌞 O sol entra pela janela. Um novo dia começou, e com ele, a sensação de que o tempo está se esgotando.");
+    
+    // Alerta de Início de Dia (Mantenha se você tiver o contador de dias)
+    System.out.println("\n--- INÍCIO DE UM NOVO DIA DE INVESTIGAÇÃO ---"); 
+    System.out.println("---------------------------------------------\n");
+}
+
+   
 }
