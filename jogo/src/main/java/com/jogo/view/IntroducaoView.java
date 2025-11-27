@@ -13,7 +13,7 @@ public class IntroducaoView {
     public void esperarEnterParaContinuar() {
         System.out.println("\n[... ]");
         this.scanner.nextLine(); 
-        System.out.println("\n");
+
     }
 
     public void exibirApresentacao() {

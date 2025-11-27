@@ -71,6 +71,7 @@ public class JogoController {
 
                 suspeitoService.adicionarSuspeito(suspeitoFactory.criarZelador());
                 suspeitoService.exibirListaSuspeitos();
+                this.introducaoView.esperarEnterParaContinuar();
 
                 decisaoFinal = false;
             } else {
@@ -94,20 +95,115 @@ public class JogoController {
         }
         } }while(decisaoFinal == true);
 
-        this.narrativaView.exibirRetornoParaCasa();
+
+        fimDiaNovoDia();
+
+        this.narrativaView.exibirCenaJamesMachucado();
+        suspeitoService.adicionarSuspeito(suspeitoFactory.criarIrmaoJames());
+        suspeitoService.exibirListaSuspeitos();
+        this.introducaoView.esperarEnterParaContinuar();
+
+        this.narrativaView.exibirCenaCasaLucas();
         decisao = scanner.next();
-        decisaoFinal = SimOuNao(decisao);
+
+        decisaoFinal = SimOuNao(decisao); 
+        this.introducaoView.esperarEnterParaContinuar();
+
+        do {
+            if(decisaoFinal == true)  {
+             boolean sorteFinal = sorte();
+            if(sorteFinal == true) {
+                this.narrativaView.exibirCenaInvasaoQuartoLucas();
+                pistaService.adicionarPista(pistaFactory.criarCelularLucas());
+                pistaService.getPistasEncontradas();
+                this.introducaoView.esperarEnterParaContinuar();
+
+                suspeitoService.adicionarSuspeito(suspeitoFactory.criarPaiLucas());
+                suspeitoService.exibirListaSuspeitos();
+                this.introducaoView.esperarEnterParaContinuar();
+
+                decisaoFinal = false;
+            } else {
+                this.narrativaView.exibirCenaJoshPegoPeloPaiLucas();
+                this.gerenciador.aplicarPenaPorAtoIlegal();
+                this.introducaoView.esperarEnterParaContinuar();
+                gerenciador.consultarNivelSuspeita();
+                this.introducaoView.esperarEnterParaContinuar();
+
+                decisaoFinal = this.narrativaView.reivestigar();
+                decisao = scanner.next();
+                decisaoFinal = SimOuNao(decisao);
+                
+                if(decisaoFinal == true) {
+                    decisaoFinal = true;
+                } else {
+                decisaoFinal = false;
+            }
+        }
+        } }while(decisaoFinal == true);
+
+
+        this.narrativaView.exibirCenaDiretorMiller();
+        decisao = scanner.next();
+
+        decisaoFinal = SimOuNao(decisao); 
+        this.introducaoView.esperarEnterParaContinuar();
+
+        do {
+            if(decisaoFinal == true)  {
+             boolean sorteFinal = sorte();
+            if(sorteFinal == true) {
+                this.narrativaView.exibirCenaInvestigacaoSalaDiretor();
+                pistaService.adicionarPista(pistaFactory.criarBauDiretor());
+                pistaService.getPistasEncontradas();
+                this.introducaoView.esperarEnterParaContinuar();
+
+                suspeitoService.adicionarSuspeito(suspeitoFactory.criarDiretor());
+                suspeitoService.exibirListaSuspeitos();
+                this.introducaoView.esperarEnterParaContinuar();
+
+                decisaoFinal = false;
+            } else {
+                this.narrativaView.exibirCenaDiretorPegaJosh();
+                this.gerenciador.aplicarPenaPorAtoIlegal();
+                this.introducaoView.esperarEnterParaContinuar();
+                gerenciador.consultarNivelSuspeita();
+                this.introducaoView.esperarEnterParaContinuar();
+
+                decisaoFinal = this.narrativaView.reivestigar();
+                decisao = scanner.next();
+                decisaoFinal = SimOuNao(decisao);
+                
+                if(decisaoFinal == true) {
+                    decisaoFinal = true;
+                } else {
+                decisaoFinal = false;
+            }
+        }
+        } }while(decisaoFinal == true);
+
+
+    }         
+    
+
+
+
+    public void fimDiaNovoDia() {
+        this.narrativaView.exibirRetornoParaCasa();
+        String decisao = scanner.next();
+        boolean decisaoFinal = SimOuNao(decisao);
         this.introducaoView.esperarEnterParaContinuar();
 
         if(decisaoFinal == true) {
             pistaService.getPistasEncontradas();
+            this.introducaoView.esperarEnterParaContinuar();
             suspeitoService.exibirListaSuspeitos();
+            this.introducaoView.esperarEnterParaContinuar();
+
         }
 
-        
         this.narrativaView.exibirNovoDia();
-    }         
-    
+    }
 
 
     public boolean SimOuNao(String escolhaBruta) {

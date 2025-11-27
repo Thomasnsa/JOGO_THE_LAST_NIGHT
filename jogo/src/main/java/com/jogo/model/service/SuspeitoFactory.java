@@ -43,9 +43,9 @@ public class SuspeitoFactory {
         );
     }
 
-    public static SuspeitoEntity criarPaiDerick() {
+    public static SuspeitoEntity criarPaiLucas() {
         return new SuspeitoEntity(
-            "Pai de Derick",
+            "Pai de Lucas (Sr Steve)",
             "Com uma família problemática, ele talvez por raiva ou ódio contratou alguém para querer silenciar Lucas (vitima), até porque ele espancava o filho"
         );
     }
